@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HIQES Animation Show</string>
+    <string name="btn_show_interp_label">Show Interp.</string>
+    <string name="btn_graph_interp_label">Graph Interp.</string>
+    <string name="sample_text">Sample Text</string>
+
+</resources>

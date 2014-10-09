@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="android_interps">
+        <item>Accelerate Declerate</item>
+        <item>Accelerate</item>
+        <item>Anticipate</item>
+        <item>Anticipate Overshoot</item>
+        <item>Bounce</item>
+        <item>Cycle</item>
+        <item>Decelerate</item>
+        <item>Linear</item>
+        <item>Overshoot</item>
+    </string-array>
+</resources>
