@@ -16,6 +16,7 @@
 package com.hiqes.animshow;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -63,6 +64,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private RadioGroup                  mRadio;
     private TextView                    mText;
     private Animation                   mAnimation;
+    private View                        mProgress;
+    private AnimationDrawable           mProgAnim;
     private GraphView                   mGraph;
     private Interpolator                mCurInterp;
     private Spinner                     mInterpSpinner;
@@ -82,6 +85,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
             if (mGraphStep <= 1.0f) {
                 mHandler.postDelayed(this, GRAPH_STEP_TIMEOUT);
+            } else {
+                mProgAnim.stop();
+                mProgress.setVisibility(View.INVISIBLE);
             }
         }
     };
@@ -95,6 +101,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         RadioButton btn = (RadioButton)findViewById(R.id.btn_show_interp);
         btn.setChecked(true);
         mRadio.setOnCheckedChangeListener(this);
+
+        mProgress = findViewById(R.id.prog);
+        mProgress.setBackgroundResource(android.R.drawable.progress_indeterminate_horizontal);
+        mProgAnim = (AnimationDrawable)mProgress.getBackground();
 
         mText = (TextView)findViewById(R.id.sample_text);
         mGraph = (GraphView)findViewById(R.id.iterp_graph);
@@ -155,11 +165,18 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         if (mCurMode == MODE_SHOW) {
             mText.setVisibility(View.VISIBLE);
             mGraph.setVisibility(View.INVISIBLE);
+            if (mProgAnim.isRunning()) {
+                mProgAnim.stop();
+            }
+
+            mProgress.setVisibility(View.INVISIBLE);
             mAnimation.setInterpolator(mCurInterp);
             mText.startAnimation(mAnimation);
         } else {
             mText.setVisibility(View.INVISIBLE);
             mGraph.setVisibility(View.VISIBLE);
+            mProgress.setVisibility(View.VISIBLE);
+            mProgAnim.start();
             mGraph.clear();
             mGraphStep = 0.0f;
             mIncrement = 1.0f / (float)mGraph.getWidth();
